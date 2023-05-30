@@ -1,10 +1,14 @@
-import {Text} from "./input/text/input-text.component";
-import {useInputText} from "./input/text/use-input-text.hook";
+import Text from "./input/text/input-text.component";
+import Form from "./form/form.component";
+import Button from "./button/button.component";
 
 const UI = {
     Input: {
-        Text: Text,
-        useInputText: useInputText
+        Text: Text
+    },
+    Form: Form,
+    Button: {
+        Default: Button
     }
 }
 
