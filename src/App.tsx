@@ -6,7 +6,7 @@ const App = () => {
     const input = useInputText('', {
         validationFunction: (value) => !!value.match('1'),
     })
-    const form = useForm<{ name: [string] }>();
+    const form = useForm<{ name: string[] }>();
 
     return (
         <div>
