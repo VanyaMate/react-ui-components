@@ -1,0 +1,29 @@
+@import "src/styles/colors";
+@import "src/styles/sizes";
+
+.container {
+    box-sizing: border-box;
+
+    width: 100%;
+    height: $mediumSmallHeight;
+    padding: $mediumOffset;
+    border-radius: $smallOffset;
+    transition: .1s;
+
+    background: $white;
+    border: 1px solid $gray;
+
+    outline: none;
+
+    &:focus {
+        border: 1px solid $markBlueLight;
+    }
+
+    &[data-valid="true"] {
+        border: 1px solid $markBlueLight;
+    }
+
+    &[data-valid="false"] {
+        border: 1px solid $markRedLight;
+    }
+}
