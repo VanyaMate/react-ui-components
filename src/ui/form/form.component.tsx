@@ -12,7 +12,7 @@ const Form: React.FC<IForm> = (props) => {
     const saveData = function () {
         const formData: FormData = formRef.current ? new FormData(formRef.current!) : new FormData();
         const formDataKeys = formData.keys();
-        const data = {};
+        const data: Data<any> = {};
 
         let key = formDataKeys.next();
         while (key.value) {

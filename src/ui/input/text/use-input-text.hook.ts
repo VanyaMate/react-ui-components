@@ -1,16 +1,21 @@
 import {useMemo, useState} from "react";
+import {IInput} from "../input.interface";
 
 export interface IUseInputTextOptions {
     validationFunction?: (value: string) => boolean;
+    message?: ((value: string) => string) | string;
     debounce?: number;
 }
 
-export interface IUseInputText {
+export interface IUseInputText extends IInput {
     value: {
         get: string;
         set: (value: string) => void;
     };
-    valid: boolean;
+    valid: {
+        status: boolean,
+        message: string
+    };
 }
 
 export const useInputText = function (defaultValue: string = '', options: IUseInputTextOptions = {}): IUseInputText {
@@ -28,7 +33,10 @@ export const useInputText = function (defaultValue: string = '', options: IUseIn
             get: value,
             set: setValue,
         },
-        valid: valid
+        valid: {
+            status: valid,
+            message: typeof options.message === 'function' ? options.message(value) : (options.message ?? '')
+        }
     }
 }
 
