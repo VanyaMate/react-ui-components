@@ -2,6 +2,7 @@ import {MutableRefObject, useMemo, useRef, useState} from "react";
 import {IInput, IInputStatus} from "../input/input.interface";
 
 export type Data<T> = T | { [key: string]: any };
+export type InputError = { name: string, message: string };
 export type FormResponse<T> = {
     formData: {
         get: FormData,
@@ -15,7 +16,7 @@ export type FormResponse<T> = {
     ref: MutableRefObject<HTMLFormElement | null>,
     valid: {
         status: boolean,
-        errors: string[]
+        errors: InputError[]
     },
 };
 
@@ -25,7 +26,7 @@ export const useForm = function<T> (onSubmit?: (formResponse: FormResponse<T>) =
     const formRef = useRef<HTMLFormElement | null>(null);
     const valid = useMemo(() => {
         let status = true;
-        const errors: string[] = inputs
+        const errors: InputError[] = inputs
             .filter((input) => {
                 if (!input.valid.status) {
                     status = false;
@@ -33,8 +34,8 @@ export const useForm = function<T> (onSubmit?: (formResponse: FormResponse<T>) =
                 }
                 return false;
             })
-            .map((error) => {
-                return error.valid.message
+            .map((input) => {
+                return { name: input.name, message: input.valid.message };
             })
 
         return {status, errors};

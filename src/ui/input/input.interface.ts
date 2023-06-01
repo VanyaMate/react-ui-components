@@ -4,6 +4,7 @@ export interface IInputStatus {
 }
 
 export interface IInput {
+    name: string,
     value: {
         get: any;
         set: (value: any) => void;

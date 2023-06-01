@@ -7,8 +7,8 @@ export interface ITextProps extends React.InputHTMLAttributes<HTMLInputElement> 
 }
 
 const Text: React.FC<ITextProps> = (props) => {
-    const current = useInputText(String(props.value ?? ''));
-    const { hook, type, value, onChange: _, className, ...other } = props;
+    const current = useInputText(String(props.value ?? ''), { name: '' });
+    const { hook, type, value, name, onChange: _, className, ...other } = props;
     const activeHook = useMemo(() => hook ?? current, [hook, current]);
 
     const onChange = function (e: ChangeEvent<HTMLInputElement>) {
@@ -21,6 +21,7 @@ const Text: React.FC<ITextProps> = (props) => {
             value={activeHook.value.get}
             onChange={onChange}
             data-valid={activeHook.valid}
+            name={activeHook.name}
             {...other}
         />
     );
