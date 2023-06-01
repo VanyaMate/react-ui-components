@@ -41,6 +41,11 @@ export const useForm = function<T> (onSubmit?: (formResponse: FormResponse<T>) =
         return {status, errors};
     }, inputs);
 
+    const _onSubmit = (formResponse: FormResponse<T>) => {
+        inputs.forEach((input) => input.valid.executeCheck());
+        onSubmit?.(formResponse);
+    }
+
     return {
         formData: {
             get: formData,
@@ -50,7 +55,7 @@ export const useForm = function<T> (onSubmit?: (formResponse: FormResponse<T>) =
             get: data,
             set: setData,
         },
-        onSubmit,
+        onSubmit: _onSubmit,
         ref: formRef,
         valid: valid
     }

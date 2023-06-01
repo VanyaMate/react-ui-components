@@ -1,4 +1,4 @@
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {IInput} from "../input.interface";
 
 export interface IUseInputTextOptions {
@@ -12,13 +12,20 @@ export interface IUseInputText extends IInput {}
 
 export const useInputText = function (defaultValue: string = '', options: IUseInputTextOptions = {}): IUseInputText {
     const [value, setValue] = useState<string>(defaultValue);
+    const [changed, setChanged] = useState<boolean>(false);
+    const [check, setCheck] = useState<boolean>(false);
+
+    useEffect(() => {
+        return () => setChanged(true);
+    }, [value, check])
+
     const valid = useMemo<boolean>(() => {
         if (options.validationFunction) {
             return options.validationFunction(value);
         } else {
             return true;
         }
-    }, [value]);
+    }, [value, check]);
 
     return {
         name: options.name ?? '',
@@ -27,8 +34,9 @@ export const useInputText = function (defaultValue: string = '', options: IUseIn
             set: setValue,
         },
         valid: {
-            status: valid,
-            message: typeof options.message === 'function' ? options.message(value) : (options.message ?? '')
+            status: changed ? valid : true,
+            message: typeof options.message === 'function' ? options.message(value) : (options.message ?? ''),
+            executeCheck: () => setCheck(prev => !prev),
         }
     }
 }

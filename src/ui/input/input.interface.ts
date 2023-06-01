@@ -1,6 +1,7 @@
 export interface IInputStatus {
     status: boolean,
     message: string,
+    executeCheck: () => void
 }
 
 export interface IInput {
